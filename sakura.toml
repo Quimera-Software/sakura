@@ -1,0 +1,17 @@
+language = "eng" # eng esp
+log_path = "info.log"
+app_name = ""
+
+[telegram]
+    enabled = true
+    token = ""
+    channels = []
+
+[discord]
+    enabled = true
+    webhook = ""
+
+    username = "Sakura"
+    avatar_url = ""
+    use_tts = false
+    mentions = []
