@@ -88,7 +88,6 @@ func (dMsg *discordMessage) fill() error {
 
 	dMsg.webhookURL = cfg.Discord.Webhook
 	if dMsg.webhookURL == "" {
-		LogFatal("(SAKURA) No discord webhook URL set")
 		return errors.New("no discord webhook URL set")
 	}
 

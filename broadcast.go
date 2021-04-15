@@ -1,11 +1,13 @@
 package sakura
 
-import "fmt"
+import (
+	"fmt"
+)
 
-func Broadcast(msg string, reportType string, reportError error) error {
+func Broadcast(msg string, reportType string, args ...string) error {
 	var errMsg string
 
-	if reportError == nil {
+	if len(args) == 0 {
 		switch cfg.Language {
 		case LanguageEsp:
 			errMsg = "La aplicación no ha proporcionado más información"
@@ -13,7 +15,9 @@ func Broadcast(msg string, reportType string, reportError error) error {
 			errMsg = "The application provided no further information"
 		}
 	} else {
-		errMsg = reportError.Error()
+		for _, arg := range args {
+			errMsg += arg + ". "
+		}
 	}
 
 	if cfg.Discord.Enabled {
@@ -53,4 +57,36 @@ func Broadcast(msg string, reportType string, reportError error) error {
 	}
 
 	return nil
+}
+
+func BroadcastInfo(msg string, args ...string) {
+	err := Broadcast(msg, "INFO", args...)
+	if err != nil {
+		fmt.Println("[ERROR] (SAKURA) Unable broadcast info:", err.Error())
+		fmt.Println("[ERROR] (SAKURA) Unable broadcast info")
+	}
+}
+
+func BroadcastWarn(msg string, args ...string) {
+	err := Broadcast(msg, "WARN", args...)
+	if err != nil {
+		fmt.Println("[ERROR] (SAKURA) Unable broadcast warning:", err.Error())
+		fmt.Println("[ERROR] (SAKURA) Unable broadcast warning")
+	}
+}
+
+func BroadcastError(msg string, args ...string) {
+	err := Broadcast(msg, "ERROR", args...)
+	if err != nil {
+		fmt.Println("[ERROR] (SAKURA) Unable broadcast error:", err.Error())
+		fmt.Println("[ERROR] (SAKURA) Unable broadcast error")
+	}
+}
+
+func BroadcastFatal(msg string, args ...string) {
+	err := Broadcast(msg, "FATAL", args...)
+	if err != nil {
+		fmt.Println("[ERROR] (SAKURA) Unable broadcast fatal error:", err.Error())
+		fmt.Println("[ERROR] (SAKURA) Unable broadcast fatal error")
+	}
 }
