@@ -12,11 +12,13 @@ const (
 )
 
 type Config struct {
-	AppName string
-	LogPath string `mapstructure:"log_path"`
-	Language int `mapstructure:"_"` // Ignore it since we'll map it to an int
-	Discord DiscordConfig
-	Telegram TelegramConfig
+	AppName        string
+	LogPath        string `mapstructure:"log_path"`
+	Language       int    `mapstructure:"_"` // Ignore it since we'll map it to an int
+	BroadcastLevel int    `mapstructure:"broadcast_level"`
+	LogLevel       int    `mapstructure:"log_level"`
+	Discord        DiscordConfig
+	Telegram       TelegramConfig
 }
 
 type DiscordConfig struct {

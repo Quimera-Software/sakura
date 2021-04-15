@@ -9,45 +9,72 @@ import (
 	"os"
 )
 
+const (
+	LevelInfo = iota
+	LevelWarn
+	LevelError
+	LevelFatal
+)
+
+func SetBroadcastLevel(lv int)  {
+	cfg.BroadcastLevel = lv
+}
+
+func SetLoggingLevel(lv int)  {
+	cfg.LogLevel = lv
+}
+
 func LogInfo(msg string) {
-	logToFile("[INFO] " + msg)
+	if cfg.LogLevel >= LevelInfo {
+		logToFile("[INFO] " + msg)
+	}
 }
 
 func BroadcastInfo(msg string, details string) {
-	LogInfo(msg)
+	if cfg.BroadcastLevel >= LevelInfo {
+		LogInfo(msg)
 
-	sErr := Broadcast(msg, "INFO", errors.New(details))
-	if sErr != nil {
-		LogWarn("(SAKURA) Unable broadcast info")
-		LogWarn("(SAKURA) " + sErr.Error())
+		sErr := Broadcast(msg, "INFO", errors.New(details))
+		if sErr != nil {
+			LogWarn("(SAKURA) Unable broadcast info")
+			LogWarn("(SAKURA) " + sErr.Error())
+		}
 	}
 }
 
 func LogWarn(msg string) {
-	logToFile("[WARN] " + msg)
+	if cfg.LogLevel >= LevelWarn {
+		logToFile("[WARN] " + msg)
+	}
 }
 
 func BroadcastWarn(msg string, details string) {
-	LogWarn(msg)
+	if cfg.BroadcastLevel >= LevelWarn {
+		LogWarn(msg)
 
-	sErr := Broadcast(msg, "WARN", errors.New(details))
-	if sErr != nil {
-		LogWarn("(SAKURA) Unable broadcast warning")
-		LogWarn("(SAKURA) " + sErr.Error())
+		sErr := Broadcast(msg, "WARN", errors.New(details))
+		if sErr != nil {
+			LogWarn("(SAKURA) Unable broadcast warning")
+			LogWarn("(SAKURA) " + sErr.Error())
+		}
 	}
 }
 
 func LogError(msg string) {
-	logToFile("[ERROR] " + msg)
+	if cfg.LogLevel >= LevelError {
+		logToFile("[ERROR] " + msg)
+	}
 }
 
 func BroadcastError(msg string, err error) {
-	LogError(msg)
+	if cfg.BroadcastLevel >= LevelError {
+		LogError(msg)
 
-	sErr := Broadcast(msg, "ERROR", err)
-	if sErr != nil {
-		LogError("(SAKURA) Unable to broadcast error")
-		LogError("(SAKURA) " + sErr.Error())
+		sErr := Broadcast(msg, "ERROR", err)
+		if sErr != nil {
+			LogError("(SAKURA) Unable to broadcast error")
+			LogError("(SAKURA) " + sErr.Error())
+		}
 	}
 }
 
