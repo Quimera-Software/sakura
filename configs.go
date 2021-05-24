@@ -12,7 +12,7 @@ const (
 )
 
 type Config struct {
-	AppName        string
+	AppName        string `mapstructure:"app_name"`
 	LogPath        string `mapstructure:"log_path"`
 	Language       int    `mapstructure:"_"` // Ignore it since we'll map it to an int
 	BroadcastLevel int    `mapstructure:"broadcast_level"`
@@ -25,14 +25,14 @@ type DiscordConfig struct {
 	Enabled   bool
 	Username  string
 	AvatarURL string `mapstructure:"avatar_url"`
-	UseTTS    bool `mapstructure:"use_tts"`
+	UseTTS    bool   `mapstructure:"use_tts"`
 	Mentions  []int64
 	Webhook   string
 }
 
 type TelegramConfig struct {
-	Enabled bool
-	Token string
+	Enabled  bool
+	Token    string
 	Channels []int64
 }
 
